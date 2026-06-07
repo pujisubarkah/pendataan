@@ -1,12 +1,12 @@
 <template>
   <footer>
     <div class="bg-[#2894D9] text-white">
-      <div class="container mx-auto px-6 py-16">
-        <div class="grid md:grid-cols-4 gap-10">
+      <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           <div>
             <img
               src="/logo-panrb.png"
-              class="h-16 mb-4"
+              class="h-14 sm:h-16 mb-4"
               alt="Logo PANRB"
             >
 
@@ -76,7 +76,7 @@
     </div>
 
     <div class="bg-black border-t border-white/20">
-      <div class="container mx-auto px-6 py-4">
+      <div class="container mx-auto px-4 sm:px-6 py-4">
         <div class="flex flex-wrap gap-6 justify-center text-sm text-blue-100">
           <a href="#" class="hover:text-white transition-colors">MAPANRB</a>
           <a href="#" class="hover:text-white transition-colors">PPID</a>
@@ -87,7 +87,7 @@
     </div>
 
     <div class="bg-black border-t border-white/20">
-      <div class="container mx-auto px-6 py-4 text-center text-sm text-blue-200">
+      <div class="container mx-auto px-4 sm:px-6 py-4 text-center text-sm text-blue-200">
         &copy; {{ new Date().getFullYear() }} Kementerian PANRB - Pendataan Inovasi Pelayanan Publik
       </div>
     </div>

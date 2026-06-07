@@ -1,10 +1,10 @@
 <template>
   <div class="mb-10">
-    <div class="flex items-center justify-between mb-6">
-      <h3 class="text-xl font-bold text-gray-800">Daftar Inovasi</h3>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+      <h3 class="text-lg sm:text-xl font-bold text-gray-800">Daftar Inovasi</h3>
       <button
         @click="addInnovation"
-        class="flex items-center gap-2 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+        class="inline-flex items-center justify-center gap-2 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium px-4 sm:px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
       >
         <IconPlus size="20" />
         Tambah Inovasi
@@ -20,10 +20,10 @@
       <div
         v-for="(item, index) in innovations"
         :key="item.id"
-        class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 group"
+        class="bg-white border border-gray-100 rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-xl transition-all duration-300 group"
       >
-        <div class="flex justify-between items-center mb-5 border-b border-gray-100 pb-4">
-          <h4 class="text-lg font-bold text-gray-700 flex items-center gap-2">
+        <div class="flex justify-between items-start sm:items-center gap-3 mb-5 border-b border-gray-100 pb-4">
+          <h4 class="text-base sm:text-lg font-bold text-gray-700 flex items-center gap-2">
             <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">
               {{ index + 1 }}
             </span>
@@ -31,7 +31,7 @@
           </h4>
           <button
             @click="removeInnovation(index)"
-            class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+            class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-full transition-colors sm:opacity-0 sm:group-hover:opacity-100 sm:focus:opacity-100"
             title="Hapus Inovasi"
           >
             <IconTrash size="20" />
@@ -117,11 +117,47 @@
         Tambah Inovasi Sekarang
       </button>
     </div>
+
+    <!-- Tombol Navigasi Bawah -->
+    <div class="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-8 border-t border-gray-200 pt-6">
+      <NuxtLink
+        :to="prevUrl"
+        class="inline-flex items-center justify-center w-full sm:w-auto border border-blue-600 text-blue-600 px-6 py-3 rounded-lg hover:bg-blue-50 transition"
+      >
+        Kembali
+      </NuxtLink>
+      <button
+        @click="saveAndContinue"
+        :disabled="isSubmitting"
+        class="inline-flex items-center justify-center w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {{ isSubmitting ? 'Menyimpan...' : 'Simpan & Lanjut' }}
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { IconPlus, IconTrash, IconBulb } from '@tabler/icons-vue'
+
+const props = defineProps({
+  siklus: {
+    type: String,
+    required: true
+  },
+  nextUrl: {
+    type: String,
+    required: true
+  },
+  prevUrl: {
+    type: String,
+    required: true
+  }
+})
+
+const router = useRouter()
+const profilId = useState('profilId')
+const isSubmitting = ref(false)
 
 const innovations = ref([])
 // Menambahkan ID unik untuk mempermudah transisi list
@@ -141,6 +177,53 @@ function addInnovation() {
 
 function removeInnovation(index) {
   innovations.value.splice(index, 1)
+}
+
+async function saveAndContinue() {
+  if (!profilId.value) {
+    alert('Sesi profil tidak ditemukan. Harap kembali dan simpan profil instansi terlebih dahulu.')
+    router.push('/profil')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    if (innovations.value.length > 0) {
+      // Validasi sederhana: pastikan judul diisi
+      const isValid = innovations.value.every(inv => inv.judul && inv.tahun)
+      if (!isValid) {
+        alert('Mohon lengkapi Judul dan Tahun untuk setiap inovasi yang ditambahkan.')
+        isSubmitting.value = false
+        return
+      }
+
+      // POST semua inovasi ke API
+      await Promise.all(innovations.value.map(inv => {
+        return $fetch('/api/inovasi', {
+          method: 'POST',
+          body: {
+            profilId: Number(profilId.value),
+            siklus: props.siklus,
+            judul: inv.judul,
+            tahun: Number(inv.tahun),
+            deskripsi: inv.deskripsi,
+            keunggulan: inv.keunggulan,
+            kekurangan: inv.kekurangan,
+            dampak: inv.dampak
+          }
+        })
+      }))
+    }
+    
+    // Sukses, lanjut halaman berikutnya
+    router.push(props.nextUrl)
+  } catch (error) {
+    console.error('Error saving innovations:', error)
+    alert('Terjadi kesalahan saat menyimpan data inovasi.')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 

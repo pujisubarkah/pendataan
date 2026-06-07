@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-7xl mx-auto px-6 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
     <div class="mb-8">
-      <h1 class="text-3xl md:text-4xl font-bold text-blue-900">
+      <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 leading-tight">
         Dashboard Laporan Inovasi
       </h1>
       <p class="text-gray-600 mt-2">
@@ -11,13 +11,13 @@
 
     <div class="bg-white rounded-2xl border border-gray-200 p-4 mb-6 shadow-sm">
       <p class="text-sm font-semibold text-gray-700 mb-3">Filter Siklus Life Journey</p>
-      <div class="flex flex-wrap gap-2">
+      <div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
         <button
           v-for="item in journeyFilters"
           :key="item.key"
           type="button"
           @click="selectedJourney = item.key"
-          class="px-4 py-2 rounded-full text-sm font-medium transition-colors"
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors whitespace-nowrap shrink-0"
           :class="selectedJourney === item.key ? 'bg-[#2894D9] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
         >
           {{ item.label }}
@@ -41,28 +41,28 @@
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
-      <section class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+      <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 shadow-sm">
         <h2 class="text-xl font-semibold text-gray-800 mb-1">Peta Sebaran Inovasi</h2>
         <p class="text-sm text-gray-500 mb-4">Peta bubble sebaran instansi berdasarkan jumlah inovasi.</p>
 
         <ClientOnly>
           <VueApexCharts
             type="bubble"
-            height="320"
+            height="300"
             :options="mapOptions"
             :series="mapSeries"
           />
         </ClientOnly>
       </section>
 
-      <section class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+      <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 shadow-sm">
         <h2 class="text-xl font-semibold text-gray-800 mb-1">Word Cloud Isian Kuesioner</h2>
         <p class="text-sm text-gray-500 mb-4">Visualisasi kata dominan menggunakan treemap.</p>
 
         <ClientOnly>
           <VueApexCharts
             type="treemap"
-            height="320"
+            height="300"
             :options="wordCloudOptions"
             :series="wordCloudSeries"
           />
@@ -71,28 +71,28 @@
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      <section class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+      <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 shadow-sm">
         <h2 class="text-xl font-semibold text-gray-800 mb-1">Histogram Bigrams</h2>
         <p class="text-sm text-gray-500 mb-4">Pasangan kata dominan dari jawaban responden.</p>
 
         <ClientOnly>
           <VueApexCharts
             type="bar"
-            height="320"
+            height="300"
             :options="bigramOptions"
             :series="bigramSeries"
           />
         </ClientOnly>
       </section>
 
-      <section class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+      <section class="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5 shadow-sm">
         <h2 class="text-xl font-semibold text-gray-800 mb-1">Histogram Trigrams</h2>
         <p class="text-sm text-gray-500 mb-4">Tiga kata dominan yang membentuk pola inovasi.</p>
 
         <ClientOnly>
           <VueApexCharts
             type="bar"
-            height="320"
+            height="300"
             :options="trigramOptions"
             :series="trigramSeries"
           />
@@ -308,7 +308,19 @@ const mapOptions = {
     y: {
       formatter: (val, opts) => `${opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex].label}: ${val} inovasi`
     }
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        dataLabels: {
+          style: {
+            fontSize: '10px'
+          }
+        }
+      }
+    }
+  ]
 }
 
 const wordCloudSeries = computed(() => [
@@ -341,7 +353,19 @@ const wordCloudOptions = {
     y: {
       formatter: (val) => `${val} kemunculan`
     }
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        dataLabels: {
+          style: {
+            fontSize: '11px'
+          }
+        }
+      }
+    }
+  ]
 }
 
 const bigrams = computed(() => activeData.value.bigrams)
@@ -398,7 +422,29 @@ const baseBarOptions = {
     y: {
       formatter: (val) => `${val} kemunculan`
     }
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        plotOptions: {
+          bar: {
+            barHeight: '55%'
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: '10px'
+            }
+          }
+        }
+      }
+    }
+  ]
 }
 
 const bigramOptions = computed(() => ({
@@ -419,3 +465,14 @@ const trigramOptions = computed(() => ({
   }
 }))
 </script>
+
+<style scoped>
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>

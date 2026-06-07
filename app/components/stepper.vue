@@ -35,18 +35,18 @@
     </div>
 
     <!-- Scrollable Pills (Mobile View) -->
-    <div class="md:hidden flex gap-3 overflow-x-auto pb-4 scrollbar-hide snap-x px-1">
+    <div class="md:hidden flex gap-2 overflow-x-auto pb-4 scrollbar-hide snap-x px-1">
       <div
         v-for="(item, index) in steps"
         :key="'mobile-'+index"
-        class="whitespace-nowrap px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 snap-center shrink-0"
+        class="whitespace-nowrap px-4 py-2.5 rounded-full text-xs font-bold transition-all duration-300 snap-center shrink-0"
         :class="index === current 
           ? 'bg-linear-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-200/50' 
           : (index < current ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-white text-gray-500 border border-gray-200')"
       >
         <div class="flex items-center gap-2">
           <IconCheck v-if="index < current" size="18" stroke="3" />
-          <span v-else class="bg-white/20 w-6 h-6 rounded-full flex items-center justify-center text-xs">{{ index + 1 }}</span>
+          <span v-else class="bg-white/20 w-5 h-5 rounded-full flex items-center justify-center text-[10px]">{{ index + 1 }}</span>
           <span>{{ item }}</span>
         </div>
       </div>

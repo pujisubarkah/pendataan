@@ -1,10 +1,10 @@
 <template>
-  <div class="max-w-5xl mx-auto px-6 py-10 md:py-14">
-    <h1 class="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-10 md:py-14">
+    <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-5 sm:mb-6 leading-tight">
       FORM PENDATAAN INOVASI PELAYANAN PUBLIK INSTANSI
     </h1>
 
-    <div class="bg-blue-50 border-l-4 border-blue-600 text-blue-900 p-5 rounded-lg mb-8 text-sm md:text-base leading-relaxed text-justify">
+    <div class="bg-blue-50 border-l-4 border-blue-600 text-blue-900 p-4 sm:p-5 rounded-lg mb-8 text-sm md:text-base leading-relaxed text-justify">
       <p class="mb-3">
         Hasil pendataan akan digunakan sebagai dasar penyusunan peta layanan publik berbasis life journey, penguatan koordinasi antarperangkat daerah, serta peningkatan kualitas pelayanan publik. Oleh karena itu, kami mengharapkan partisipasi aktif Bapak/Ibu untuk mengisi data secara akurat dan lengkap.
       </p>
@@ -36,7 +36,7 @@
 
     <NuxtLink
       to="/pendataan"
-      class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded"
+      class="inline-flex items-center justify-center w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded"
     >
       Mulai Pendataan
     </NuxtLink>

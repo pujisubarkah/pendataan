@@ -1,11 +1,16 @@
 <script setup>
 import '~/assets/css/main.css'
-import { setBrandTheme } from '@idds/vue'
+import { getThemeMode, setBrandTheme, setThemeMode } from '@idds/vue'
 import { Toaster } from 'vue-sonner'
 
 // Set tema branding ke Kementerian PAN RB
 if (import.meta.client) {
   setBrandTheme('panrb')
+
+  // Default awal mengikuti permintaan: dark mode.
+  // Jika mode sudah pernah dipilih user, gunakan mode tersebut.
+  const currentMode = getThemeMode()
+  setThemeMode(currentMode || 'dark')
 }
 </script>
 
