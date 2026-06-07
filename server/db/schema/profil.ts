@@ -1,7 +1,7 @@
-import { pgTable, integer, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, integer, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const profil = pgTable('profil', {
-  id: integer('id').primaryKey(), // int4
+  id: serial('id').primaryKey(), // serial agar auto-increment
   instansiId: integer('instansi_id'), // int4
   unit: text('unit'),
   namaPic: text('nama_pic'),

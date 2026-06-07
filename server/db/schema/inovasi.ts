@@ -1,7 +1,7 @@
-import { pgTable, integer, smallint, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, integer, smallint, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const inovasi = pgTable('inovasi', {
-  id: integer('id').primaryKey(), // int4
+  id: serial('id').primaryKey(), // serial agar auto-increment
   profilId: integer('profil_id'), // int4
   siklus: text('siklus'), // (Type) - menggunakan text sementara, bisa diubah ke enum bila perlu
   judul: text('judul'),

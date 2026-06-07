@@ -21,9 +21,16 @@ export default defineEventHandler(async (event) => {
       const data = await db.insert(profil).values(body).returning()
       
       return { success: true, message: 'Data profil berhasil ditambahkan', data: data[0] }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating profil data:', error)
-      throw createError({ statusCode: 500, statusMessage: 'Gagal menyimpan data profil' })
+      return {
+        success: false,
+        statusCode: 500,
+        message: 'Gagal menyimpan data profil',
+        error: error.message,
+        postgresError: error.cause ? error.cause.message : null,
+        stack: error.stack
+      }
     }
   }
 
