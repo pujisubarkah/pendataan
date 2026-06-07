@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind CSS v4 */
+@import 'tailwindcss';
+
+/* Import IDDS color dan brand tokens */
+@import '@idds/styles/tailwind/css/idds.css';
+@import '@idds/styles/tailwind/css/panrb.css';
+
+:root {
+	--font-family: 'Poppins', sans-serif;
+	--font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+	font-family: 'Poppins', sans-serif;
+}

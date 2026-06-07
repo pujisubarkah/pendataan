@@ -1,0 +1,10 @@
+/* Menimpa kemungkinan variabel font dari library UI pihak ketiga */
+:root {
+  --font-family: "Poppins", sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Memastikan body dan semua elemen form (yang biasanya bandel) menggunakan Poppins */
+html, body, button, input, select, textarea {
+  font-family: "Poppins", sans-serif;
+}
